@@ -1,0 +1,14 @@
+[package]
+name = "fdn"
+version = "0.1.0"
+authors = ["Nathan Graule <solarliner@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+ringbuf = "0.2"
+hound = "3.4"
+itertools = "0.9"
+structopt = "0.3"
+nalgebra = "0.22"
