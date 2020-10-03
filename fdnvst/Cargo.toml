@@ -1,0 +1,13 @@
+[package]
+name = "fdnvst"
+version = "0.1.0"
+authors = ["Nathan Graule <solarliner@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "fdn"
+crate-type = ["cdylib"]
+
+[dependencies]
+vst = "0.2"
+fdn = { path = "../" }

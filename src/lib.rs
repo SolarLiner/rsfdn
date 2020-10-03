@@ -69,7 +69,7 @@ const PHI: f64 = 1.6180339887;
 
 impl FDN {
     pub fn new(ndelays: usize, frame_size: usize) -> Self {
-        let delaysamples = [400, 722, 1283, 2127];
+        let delaysamples = [800, 1422, 2483, 4227];
         Self {
             fb_mat: [
                 [0.0, 1.0, 1.0, 0.0],
@@ -84,10 +84,10 @@ impl FDN {
                 DelayLine::new(delaysamples[3]),
             ],
             delay_fb: [
-                DelayLine::new(delaysamples[0] - frame_size),
-                DelayLine::new(delaysamples[1] - frame_size),
-                DelayLine::new(delaysamples[2] - frame_size),
-                DelayLine::new(delaysamples[3] - frame_size),
+                DelayLine::new(delaysamples[0].checked_sub(frame_size).unwrap_or(1)),
+                DelayLine::new(delaysamples[1].checked_sub(frame_size).unwrap_or(1)),
+                DelayLine::new(delaysamples[2].checked_sub(frame_size).unwrap_or(1)),
+                DelayLine::new(delaysamples[3].checked_sub(frame_size).unwrap_or(1)),
             ],
             feedback: [
                 vec![0.0; frame_size],
@@ -95,6 +95,12 @@ impl FDN {
                 vec![0.0; frame_size],
                 vec![0.0; frame_size],
             ],
+        }
+    }
+
+    pub fn update_framesize(&mut self, framesize: usize) {
+        for fb in self.feedback.iter_mut() {
+            fb.resize(framesize, 0.0);
         }
     }
 
@@ -140,7 +146,7 @@ impl FDN {
             delayfb.process(feedback, inp);
         }
 
-        mix(out, inp, 0.1);
+        //mix(out, inp, 0.1);
     }
 }
 
